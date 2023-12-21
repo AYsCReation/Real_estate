@@ -12,7 +12,7 @@ mongoose.connect("mongodb+srv://ayushm850:ayushmishra@cluster0.qws2kwa.mongodb.n
   .catch((err) => {
     console.log("not connected", err);
   });
-
+  
 const app = express();
 app.use(express.json());
 
@@ -26,7 +26,7 @@ app.use((err, req , res , next) => {
     statusCode,
     message, 
   })
-})
+}) 
  
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
