@@ -17,11 +17,14 @@ export const signup = async (req,res , next) =>{
    } catch(error){
       next(error);
    }
-  
 }
 
 export const signin = async(req , res , next) =>{
    const {email , password} = req.body;
+   const formData = req.body;
+   if (!formData.email || !formData.password) {
+      return next(errorHandler(404 , "Please fill all the details sir!"))
+    }
    try{
       const validUser = await User.findOne({email});
    if(!validUser){

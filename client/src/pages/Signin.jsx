@@ -1,12 +1,17 @@
 import { set } from 'mongoose';
 import React, { useState } from 'react'
 import { Link , useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart , signInSuccess , signInFailure } from '../redux/user/userSlice';
 
 const Signin = () => {
   const [formdata , setFormData] = useState({});
-  const [ error , setError] = useState(null);
-  const [ loading , setLoading] = useState(false);
+  // const [ error , setError] = useState(null);
+  // const [ loading , setLoading] = useState(false);
+
+  const { loading , error} = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) =>{
     setFormData({
       ...formdata,
@@ -17,17 +22,10 @@ const Signin = () => {
   }
   const handleSubmit = async (e) =>{
     e.preventDefault();
-    const keys = Object.keys(formdata);
-
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (!formdata[key]) {
-        setError("Please fill all the details!");
-        return; // Stop the loop if an error is found
-      }
-    }
+    
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch(signInStart());
     const res = await fetch('/api/auth/signin' , {
       method : 'POST' ,
       headers : {
@@ -38,18 +36,21 @@ const Signin = () => {
 
     const data = await res.json();
     if(data.success == false){
-      setLoading(false);
-      setError(data.message);
+      // setLoading(false);
+      // setError(data.message);
+      dispatch(signInFailure(data.message));
       return; 
     } 
-    setError(null);
-    setLoading(false);
+    // setError(null);
+    // setLoading(false);
+    dispatch(signInSuccess(data));
     navigate('/');
    console.log(data);
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
-    
+      // setLoading(false);
+      // setError(error.message);
+      dispatch(signInFailure(error.message));
+
     }
     
 
