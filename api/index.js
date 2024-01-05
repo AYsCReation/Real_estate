@@ -14,7 +14,7 @@ mongoose.connect("mongodb+srv://ayushm850:ayushmishra@cluster0.qws2kwa.mongodb.n
   .catch((err) => {
     console.log("not connected", err);
   });
-  
+   
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
