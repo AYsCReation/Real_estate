@@ -45,7 +45,7 @@ useEffect(() =>{
 
 
   const handleChangeImage = () =>{
-    if(files.length + formData.imageUrls.length == 0) setImageUploadError('First Select the images Champ!');
+    if(files.length  === 0) setImageUploadError('First Select the images Champ!');
     else if(files.length > 0 && files.length + formData.imageUrls.length <7){
       setLoading(true);
       setImageUploadError(false);
