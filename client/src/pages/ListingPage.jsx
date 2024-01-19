@@ -6,6 +6,8 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from "react-icons/fa";
 import { BiSolidOffer } from "react-icons/bi";
+import { useSelector } from 'react-redux';
+import Contact from '../components/Contact';
 
 
 
@@ -14,7 +16,9 @@ const ListingPage = () => {
     const [listingData, setListingData] = useState([]);
     const [loading, setLoading] = useState(true); // Set initial loading state to true
     const [error, setError] = useState(false);
+    const [contact , setContact] = useState(false);
     const params = useParams();
+    const {currentUser}  = useSelector((state)=> state.user);
     const formatCurrency = (value) => {
         // Format the currency using the Intl.NumberFormat API
         const formattedValue = new Intl.NumberFormat('en-IN', {
@@ -47,7 +51,7 @@ const ListingPage = () => {
         fetchListing();
     }, [params.id]); // Add params.id as a dependency to useEffect
     console.log(listingData.imageUrls)
-    console.log(loading , error);
+    console.log(currentUser._id ," ", listingData.userRef);
     return (
         <main>
             {loading &&
@@ -117,6 +121,10 @@ const ListingPage = () => {
             </li>
             
         </ul>
+           {currentUser && currentUser._id !== listingData.userRef && !contact &&
+           <button onClick={() => setContact(true)} className='bg-slate-700 p-3 rounded-lg uppercase text-white hover:opacity-95'>Contact Owner</button>
+           } 
+          {contact && <Contact listingData={listingData} setContact={setContact} contact={contact} />}
 
     </div>
  
