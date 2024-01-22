@@ -24,7 +24,7 @@ app.use("/api/auth", router );
 app.use("/api/user", userRoute);
 app.use("/api/listing" , listingRoute);
 
-
+ 
 app.use((err, req , res , next) => {
   const statusCode  = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
