@@ -8,7 +8,7 @@ import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking } from "react-icons/f
 import { BiSolidOffer } from "react-icons/bi";
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
-
+import { Link } from 'react-router-dom';
 
 
 const ListingPage = () => {
@@ -34,7 +34,7 @@ const ListingPage = () => {
                 setError(false);
                 const res = await fetch(`/api/listing/get/${params.id}`);
                 const data = await res.json();
-
+               
                 if (data.success === false) {
                     setError(true);
                 } else {
@@ -50,8 +50,7 @@ const ListingPage = () => {
 
         fetchListing();
     }, [params.id]); // Add params.id as a dependency to useEffect
-    console.log(listingData.imageUrls)
-    console.log(currentUser._id ," ", listingData.userRef);
+
     return (
         <main>
             {loading &&
@@ -91,7 +90,7 @@ const ListingPage = () => {
               (
               <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md flex justify-center'>
                 {formatCurrency(+listingData.regularPrice - +listingData.discountPrice)}
-                {listingData.type === 'rent' && '/month'} <BiSolidOffer className='text-yellow-500' />
+                {listingData.type === 'rent' && '/month'} <BiSolidOffer className='text-yellow-500' /> 
               </p>
               
               )}
@@ -124,6 +123,7 @@ const ListingPage = () => {
            {currentUser && currentUser._id !== listingData.userRef && !contact &&
            <button onClick={() => setContact(true)} className='bg-slate-700 p-3 rounded-lg uppercase text-white hover:opacity-95'>Contact Owner</button>
            } 
+           {!currentUser && (<p className='font-semibold text-center p-2'>You have to <Link to={'/sign-in'}> <span className='text-blue-800 cursor-pointer hover:underline'> Sign in </span></Link> first to contact with the owner</p>)}
           {contact && <Contact listingData={listingData} setContact={setContact} contact={contact} />}
 
     </div>

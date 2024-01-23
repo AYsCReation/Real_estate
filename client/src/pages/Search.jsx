@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
+import ListingItem from '../components/ListingItem'
 const Search = () => {
     const [sidebarData, setSidebarData] = useState({
         searchTerm: "",
@@ -64,8 +66,8 @@ const navigate = useNavigate();
             const searchQuery = urlParams.toString();
             const res = await fetch(`/api/listing/get?${searchQuery}`)
             const data = await res.json();
-            setListing(data)
-            setLoading(false)
+            setListing(data);
+            setLoading(false);
         }
 
         fetchData();
@@ -138,8 +140,17 @@ const navigate = useNavigate();
                     <button className='bg-slate-700 text-white uppercase hover:opacity-95 p-3 rounded-lg'>Search</button>
                 </form>
             </div>
-            <div className='' >
+            <div className='w-full ' >
                 <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Search Results:</h1>
+           <div className='p-7 flex flex-wrap gap-10 '>
+            {!loading && listing.length === 0 && (
+                <p className='text-xl text-slate-700'>No Listing Found!</p>
+            )}
+            {loading && <div className='flex justify-center items-center w-full h-[20rem] '><Spinner/></div>}
+            {!loading && listing && listing.map((list) =>(
+                <ListingItem key={list._id} list = {list} />
+            ))}
+           </div>
             </div>
         </div>
     )
