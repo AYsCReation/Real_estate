@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdLocationOn } from 'react-icons/md'
 const ListingItem = ({list}) => {
+  
+
   const formatCurrency = (value) => {
+
     // Format the currency using the Intl.NumberFormat API
     const formattedValue = new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -12,10 +15,10 @@ const ListingItem = ({list}) => {
     return formattedValue+'K';
   };
   return (
-    <div className='bg-white shadow-md hover:shadow-xl transition-shadow overflow-hidden w-full rounded-lg sm:w-[330px]'>
+    <div className='bg-white shadow-md hover:shadow-xl transition-shadow overflow-hidden w-full rounded-lg md:w-[330px]'>
       <Link to={`/listing/${list._id}`}>
        
-        {list.imageUrls ? ( <img src={list.imageUrls[0]} alt='listing cover' className='h-[320px] sm:h-[220px] w-full object-cove hover:scale-105 transition-scale duration-300' /> ): ''}
+        {list.imageUrls ? ( <img src={list.imageUrls[0]} alt='listing cover' className='h-[320px] md:h-[220px] w-full object-cove hover:scale-105 transition-scale duration-300' /> ): ''}
       <div className='p-3 flex flex-col gap-2 w-full'>
         <p className='text-lg font-semibold text-slate-700 truncate '>{list.name}</p>
         <div className='flex items-center gap-1'>

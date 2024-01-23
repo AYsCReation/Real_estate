@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import ListingItem from '../components/ListingItem'
 const Search = () => {
+    const [showMore , setShowMore] = useState(null);
     const [sidebarData, setSidebarData] = useState({
         searchTerm: "",
         type: 'all',
@@ -63,9 +64,11 @@ const navigate = useNavigate();
 
         const fetchData = async() =>{
             setLoading(true)
+            setShowMore(false)
             const searchQuery = urlParams.toString();
             const res = await fetch(`/api/listing/get?${searchQuery}`)
             const data = await res.json();
+            data.length > 8 ? setShowMore(true) : setShowMore(false)
             setListing(data);
             setLoading(false);
         }
@@ -86,6 +89,19 @@ const navigate = useNavigate();
 
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
+    }
+    const showMoreButton = async() =>{
+        const numberOfListings = listing.length;
+        const startIndex = numberOfListings;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex', startIndex);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/listing/get?${searchQuery}`) 
+        const data = await res.json();
+        if(data.length < 9) setShowMore(false);
+        setListing([...listing , ...data]);
+        
+
     }
     console.log(listing);
     return (
@@ -150,6 +166,7 @@ const navigate = useNavigate();
             {!loading && listing && listing.map((list) =>(
                 <ListingItem key={list._id} list = {list} />
             ))}
+            {showMore && <button onClick={showMoreButton} className='text-blue-700 hover:underline text-center w-full'> Show more</button>}
            </div>
             </div>
         </div>
