@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import ListingItem from '../components/ListingItem'
+
 const Search = () => {
     const [showMore , setShowMore] = useState(null);
     const [sidebarData, setSidebarData] = useState({

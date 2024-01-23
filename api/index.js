@@ -17,7 +17,7 @@ mongoose.connect("mongodb+srv://ayushm850:ayushmishra@cluster0.qws2kwa.mongodb.n
   });
    
 const app = express();
-app.use(express.json());
+app.use(express.json()); 
 app.use(cookieParser());
 
 app.use("/api/auth", router );
