@@ -7,7 +7,7 @@ export default defineConfig({
   server : {
     proxy :{
       '/api' : {
-        target : 'http://localhost:3000',
+        target : 'https://admirable-tartufo-a3bba2.netlify.app',
         secure : false,
       },
     },
