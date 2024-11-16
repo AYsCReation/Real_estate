@@ -8,8 +8,7 @@ import listingRoute from './routes/listing.route.js';
 import path from 'path';
 
 dotenv.config();
-
-mongoose.connect("mongodb+srv://ayushm850:ayushmishra@cluster0.qws2kwa.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://ayushm850:ayushmishra@cluster0.qws2kwa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log('connected to mongodb!'); 
   })
